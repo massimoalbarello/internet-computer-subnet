@@ -1,0 +1,8 @@
+[package]
+name = "ic-consensus-message"
+version = "0.8.0"
+edition = "2021"
+
+[dependencies]
+ic-interfaces = { path = "../../interfaces" }
+ic-types = { path = "../../types/types" }

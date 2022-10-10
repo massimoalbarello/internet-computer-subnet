@@ -1,0 +1,107 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("//bazel:canisters.bzl", "optimized_canister", "rust_canister")
+
+package(default_visibility = ["//visibility:public"])
+
+LIB_DEPS = [
+    "//rs/bitcoin/types/public",
+    "//rs/crypto/extended_bip32",
+    "//rs/crypto/getrandom_for_wasm",
+    "//rs/crypto/sha",
+    "//rs/monitoring/metrics_encoder",
+    "//rs/rosetta-api/icrc1",
+    "//rs/rosetta-api/icrc1/client/cdk",
+    "//rs/rust_canisters/dfn_http_metrics",
+    "//rs/types/base_types",
+    "//rs/types/ic00_types",
+    "@crate_index//:bech32",
+    "@crate_index//:candid",
+    "@crate_index//:hex",
+    "@crate_index//:ic-cdk",
+    "@crate_index//:lazy_static",
+    "@crate_index//:ripemd",
+    "@crate_index//:serde",
+]
+
+LIB_PROC_MACRO_DEPS = [
+    "@crate_index//:async-trait",
+    "@crate_index//:ic-cdk-macros",
+]
+
+rust_library(
+    name = "ckbtc_minter_lib",
+    srcs = glob(
+        ["src/**"],
+        exclude = ["src/main.rs"],
+    ),
+    crate_name = "ic_ckbtc_minter",
+    proc_macro_deps = LIB_PROC_MACRO_DEPS,
+    version = "0.1.0",
+    deps = LIB_DEPS,
+)
+
+alias(
+    name = "minter",
+    actual = ":ckbtc_minter_lib",
+)
+
+rust_canister(
+    name = "ckbtc_minter_raw",
+    srcs = ["src/main.rs"],
+    crate_name = "ic_ckbtc_minter_canister",
+    proc_macro_deps = [
+        "@crate_index//:ic-cdk-macros",
+    ],
+    deps = [
+        ":ckbtc_minter_lib",
+        "//rs/crypto/getrandom_for_wasm",
+        "//rs/rust_canisters/dfn_http_metrics",
+        "@crate_index//:candid",
+        "@crate_index//:ic-cdk",
+    ],
+)
+
+optimized_canister(
+    name = "ckbtc_minter",
+    wasm = ":ckbtc_minter_raw",
+)
+
+rust_test(
+    name = "ckbtc_minter_lib_unit_tests",
+    crate = ":ckbtc_minter_lib",
+)
+
+rust_test(
+    name = "ckbtc_unit_tests",
+    crate = ":_wasm_ckbtc_minter_raw",
+    data = [":ckbtc_minter.did"],
+    env = {
+        "CARGO_MANIFEST_DIR": "rs/bitcoin/ckbtc/minter",
+    },
+)
+
+# integration tests defined in ckbtc minter tests/
+rust_test(
+    name = "ckbtc_minter_tests",
+    srcs = ["tests/tests.rs"],
+    data = [
+        ":ckbtc_minter.wasm",
+        "//rs/canister_sandbox",
+        "//rs/canister_sandbox/sandbox_launcher",
+    ],
+    env = {
+        "CARGO_MANIFEST_DIR": "rs/bitcoin/ckbtc/minter",
+        "IC_CKBTC_MINTER_WASM_PATH": "$(rootpath :ckbtc_minter.wasm)",
+        "LAUNCHER_BINARY": "$(rootpath //rs/canister_sandbox/sandbox_launcher)",
+        "SANDBOX_BINARY": "$(rootpath //rs/canister_sandbox)",
+    },
+    deps = [
+        ":ckbtc_minter_lib",
+        "//rs/bitcoin/types/public",
+        "//rs/rust_canisters/canister_test",
+        "//rs/state_machine_tests",
+        "//rs/test_utilities/load_wasm",
+        "//rs/types/base_types",
+        "@crate_index//:candid",
+    ],
+)

@@ -1,0 +1,25 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+package(default_visibility = ["//visibility:public"])
+
+DEPENDENCIES = [
+    "//rs/crypto",
+    "//rs/interfaces",
+    "//rs/interfaces/registry",
+    "//rs/protobuf",
+    "//rs/registry/fake",
+    "//rs/registry/keys",
+    "//rs/registry/proto_data_provider",
+    "//rs/registry/subnet_type",
+    "//rs/types/types",
+    "@crate_index//:mockall_0_7_2",
+    "@crate_index//:serde_cbor",
+]
+
+rust_library(
+    name = "registry",
+    srcs = glob(["src/**"]),
+    crate_name = "ic_test_utilities_registry",
+    version = "0.8.0",
+    deps = DEPENDENCIES,
+)

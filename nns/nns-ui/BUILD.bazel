@@ -1,0 +1,17 @@
+load("//bazel:canisters.bzl", "rust_canister")
+
+package(default_visibility = ["//visibility:public"])
+
+DEPENDENCIES = []
+
+MACRO_DEPENDENCIES = []
+
+ALIASES = {}
+
+rust_canister(
+    name = "nns-ui-canister",
+    srcs = ["canister/canister.rs"],
+    aliases = ALIASES,
+    proc_macro_deps = MACRO_DEPENDENCIES,
+    deps = DEPENDENCIES,
+)

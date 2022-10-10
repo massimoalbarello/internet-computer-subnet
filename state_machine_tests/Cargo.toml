@@ -1,0 +1,54 @@
+[package]
+name = "ic-state-machine-tests"
+version = "0.8.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+candid = "0.8.1"
+ic-crypto-internal-seed = { path= "../crypto/internal/crypto_lib/seed" }
+ic-crypto-internal-threshold-sig-bls12381 = { path= "../crypto/internal/crypto_lib/threshold_sig/bls12_381" }
+ic-crypto-internal-types = { path= "../crypto/internal/crypto_lib/types" }
+ic-crypto-tree-hash = { path= "../crypto/tree_hash" }
+ic-config = { path = "../config" }
+ic-cycles-account-manager = { path = "../cycles_account_manager" }
+ic-execution-environment = { path = "../execution_environment/" }
+ic-error-types = { path = "../types/error_types" }
+ic-ic00-types = { path = "../types/ic00_types" }
+ic-interfaces = { path = "../interfaces" }
+ic-interfaces-registry = { path = "../interfaces/registry" }
+ic-interfaces-state-manager = { path = "../interfaces/state_manager" }
+ic-logger = { path = "../monitoring/logger" }
+ic-messaging = { path = "../messaging" }
+ic-metrics = { path = "../monitoring/metrics" }
+ic-protobuf = { path = "../protobuf" }
+ic-registry-client-fake = { path = "../registry/fake" }
+ic-registry-client-helpers = { path = "../registry/helpers" }
+ic-registry-keys = { path = "../registry/keys" }
+ic-registry-proto-data-provider = { path = "../registry/proto_data_provider" }
+ic-registry-provisional-whitelist = { path = "../registry/provisional_whitelist" }
+ic-registry-routing-table = { path = "../registry/routing_table" }
+ic-registry-subnet-type = { path = "../registry/subnet_type" }
+ic-replicated-state = { path = "../replicated_state" }
+ic-state-layout = { path = "../state_layout" }
+ic-state-manager = { path = "../state_manager" }
+ic-test-utilities-metrics = { path = "../test_utilities/metrics" }
+ic-test-utilities-registry = { path = "../test_utilities/registry" }
+ic-types = { path = "../types/types" }
+serde = { version = "1.0.99", features = [ "derive" ] }
+serde_cbor = "0.11.1"
+slog = { version = "2.5.2", features = ["nested-values", "max_level_trace", "release_max_level_debug"] }
+slog-term = "2.6.0"
+tempfile = "3.1.0"
+tokio = { version = "1.15.0", features = ["full"] }
+wabt = { git = "https://github.com/dfinity-lab/wabt-rs", tag = "0.10.0-dfinity" }
+
+[dev-dependencies]
+ic-crypto-sha = { path = "../crypto/sha" }
+ic-universal-canister = { path = "../universal_canister/lib" }
+libflate = "1.1.2"
+tokio = { version = "1.15.0", features = ["macros"] }
+
+[[test]]
+name = "execution_test"

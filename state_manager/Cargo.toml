@@ -1,0 +1,68 @@
+[package]
+name = "ic-state-manager"
+version = "0.8.0"
+edition = "2021"
+
+[dependencies]
+bit-vec = "0.6.3"
+crossbeam-channel = "0.5.5"
+hex = "0.4.2"
+ic-base-types = { path = "../types/base_types" }
+ic-canonical-state = { path = "../canonical_state" }
+ic-config = { path = "../config" }
+ic-crypto-sha = { path = "../crypto/sha" }
+ic-crypto-tree-hash = { path = "../crypto/tree_hash" }
+ic-error-types = { path = "../types/error_types" }
+ic-interfaces = { path = "../interfaces" }
+ic-interfaces-state-manager = { path = "../interfaces/state_manager" }
+ic-logger = { path = "../monitoring/logger" }
+ic-metrics = { path = "../monitoring/metrics" }
+ic-protobuf = { path = "../protobuf" }
+ic-registry-subnet-type = { path = "../registry/subnet_type" }
+ic-replicated-state = { path = "../replicated_state" }
+ic-state-layout = { path = "../state_layout" }
+ic-sys = { path = "../sys" }
+ic-types = { path = "../types/types" }
+ic-utils = { path = "../utils" }
+nix = "0.23.0"
+parking_lot = "0.12.1"
+prometheus = { version = "0.12.0", features = [ "process" ] }
+prost = "0.10.4"
+rand = "0.8"
+rand_chacha = "0.3"
+scoped_threadpool = "0.1.*"
+serde = { version = "1.0.99", features = [ "derive" ] }
+serde_bytes = "0.11"
+slog = { version = "2.5.2", features = ["nested-values", "release_max_level_debug"] }
+tree-deserializer = { path = "../tree_deserializer" }
+
+[lib]
+bench = false
+
+[dev-dependencies]
+assert_matches = "1.3.0"
+criterion = "0.3"
+criterion-time = { path = "../criterion_time" }
+ic-btc-types = { path = "../bitcoin/types/public" }
+ic-btc-types-internal = { path = "../bitcoin/types/internal" }
+ic-ic00-types = { path = "../types/ic00_types" }
+ic-registry-routing-table = { path = "../registry/routing_table" }
+ic-registry-subnet-features = { path = "../registry/subnet_features" }
+ic-sys = { path = "../sys" }
+ic-test-utilities = { path = "../test_utilities" }
+ic-test-utilities-metrics = { path = "../test_utilities/metrics" }
+ic-test-utilities-tmpdir = { path = "../test_utilities/tmpdir" }
+ic-wasm-types = { path = "../types/wasm_types" }
+maplit = "1.0.2"
+proptest = "1.0"
+proptest-derive = "0.3.0"
+strum = "0.23.0"
+tempfile = "3.1.0"
+
+[[bench]]
+name = "bench_traversal"
+harness = false
+
+[features]
+default = []
+malicious_code = []

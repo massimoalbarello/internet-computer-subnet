@@ -1,0 +1,19 @@
+[package]
+name = "ic-protobuf"
+version = "0.8.0"
+edition = "2021"
+
+[dependencies]
+bincode = "1.2.1"
+candid = "0.8.1"
+erased-serde = "0.3.11"
+prost = "0.10.4"
+serde = { version = "1.0", features = ["derive"] }
+slog = {version = "2.5", features = ["nested-values"]}
+serde_json = "1.0"
+maplit = "1.0.2"
+
+[dev-dependencies]
+ic-protobuf-generator = { path = "./generator" }
+ic-test-utilities-compare-dirs = { path = "../test_utilities/compare_dirs" }
+tempfile = "3.1.0"

@@ -1,0 +1,10 @@
+[package]
+name = "dfn_protobuf"
+version = "0.8.0"
+edition = "2021"
+
+[dependencies]
+on_wire = { path = "../on_wire" }
+dfn_core = { path = "../dfn_core" }
+ic-base-types = {path="../../types/base_types"}
+prost = "0.10.4"
