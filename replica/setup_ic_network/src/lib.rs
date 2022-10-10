@@ -193,7 +193,7 @@ pub fn create_networking_stack(
 ///
 /// The Artifact Manager runs all artifact clients as separate actors.
 #[allow(clippy::too_many_arguments, clippy::type_complexity)]
-fn setup_artifact_manager(
+pub fn setup_artifact_manager(
     node_id: NodeId,
     _crypto: Arc<dyn Crypto>,
     // ConsensusCrypto is an extension of the Crypto trait and we can
